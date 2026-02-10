@@ -1,0 +1,34 @@
+import 'package:dio/dio.dart';
+import 'api_constants.dart';
+class DioHelper {
+  static late Dio dio;
+
+  static void init() {
+    dio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstants.baseUrl,
+        receiveDataWhenStatusError: true,
+        connectTimeout: const Duration(seconds: 20),
+        receiveTimeout: const Duration(seconds: 20),
+        headers: {'Content-Type': 'application/json'},
+        
+      ),
+    );
+  }
+  
+
+
+  static Future<Response> getData({
+    required String endpoint,
+    Map<String, dynamic>? query,
+    String? token,
+  }) async {
+     final res = await dio.get(
+      endpoint,
+      queryParameters: query
+ );
+    return res;
+  }
+}
+
+
